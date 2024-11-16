@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>텍스트 공백 제거기</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      background: #f9f9f9;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      text-align: center;
+    }
+    textarea {
+      width: 100%;
+      height: 150px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 10px;
+      font-size: 16px;
+      resize: none;
+    }
+    .button-group {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    button {
+      flex: 1;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    button.reset {
+      background-color: #FF5733;
+    }
+    button.reset:hover {
+      background-color: #C13E1C;
+    }
+    button.copy {
+      background-color: #28A745;
+    }
+    button.copy:hover {
+      background-color: #1C7430;
+    }
+    .result {
+      margin-top: 20px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background: #fff;
+      font-size: 16px;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>텍스트 공백 제거기</h1>
+    <textarea id="inputText" placeholder="여기에 텍스트를 입력하세요..."></textarea>
+    <div class="button-group">
+      <button id="processButton">OK</button>
+      <button id="resetButton" class="reset">리셋</button>
+      <button id="copyButton" class="copy">복사</button>
+    </div>
+    <div class="result" id="resultBox"></div>
+  </div>
+
+  <script>
+    const inputText = document.getElementById("inputText");
+    const resultBox = document.getElementById("resultBox");
+    const processButton = document.getElementById("processButton");
+    const resetButton = document.getElementById("resetButton");
+    const copyButton = document.getElementById("copyButton");
+
+    // OK 버튼 클릭: 공백과 개행 제거
+    processButton.addEventListener("click", () => {
+      const cleanedText = inputText.value.replace(/\s+/g, "");
+      resultBox.textContent = cleanedText;
+    });
+
+    // 리셋 버튼 클릭: 입력 필드 초기화
+    resetButton.addEventListener("click", () => {
+      inputText.value = "";
+      resultBox.textContent = "";
+    });
+
+    // 복사 버튼 클릭: 결과값 복사
+    copyButton.addEventListener("click", () => {
+      if (resultBox.textContent.trim() === "") {
+        alert("복사할 결과값이 없습니다.");
+        return;
+      }
+      navigator.clipboard.writeText(resultBox.textContent)
+        .then(() => alert("결과값이 클립보드에 복사되었습니다!"))
+        .catch(() => alert("복사에 실패했습니다."));
+    });
+  </script>
+</body>
+</html>
